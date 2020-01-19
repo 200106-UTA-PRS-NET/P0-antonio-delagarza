@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace PizzaBox.Storing.Repositories
 {
-    public class RepositoryStoreOrdersInfo : IRepository<StoreOrdersInfo>
+    public class RepositoryStoreOrdersInfo : IRepoNoUpdate<StoreOrdersInfo>
     {
 
         PizzaDBContext db;
@@ -18,24 +18,33 @@ namespace PizzaBox.Storing.Repositories
             this.db = db ?? throw new ArgumentNullException(nameof(db));
         }
 
-        public void Add(StoreOrdersInfo employee)
+        public void Add(StoreOrdersInfo item)
         {
-            throw new NotImplementedException();
+
+            //We need to see if the store id and order id exist
+            if (db.StoreInfo.Any(e => e.StoreId == item.StoreId) && db.OrdersUserInfo.Any(e => e.OrderId == item.OrderId))
+            {
+                db.StoreOrdersInfo.Add(item);
+            }
+            else
+            {
+                Console.WriteLine("OrderID  or StoreID not found");
+            }
+            db.SaveChanges();
         }
 
         public IEnumerable<StoreOrdersInfo> GetItems()
         {
-            throw new NotImplementedException();
+            var query = from e in db.StoreOrdersInfo
+                        select e;
+
+            return query;
         }
 
-        public void Modify(StoreOrdersInfo employee)
-        {
-            throw new NotImplementedException();
-        }
 
         public void Remove(string id)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

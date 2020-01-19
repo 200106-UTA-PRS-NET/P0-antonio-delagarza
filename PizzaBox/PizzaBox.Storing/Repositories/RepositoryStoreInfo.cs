@@ -49,14 +49,53 @@ namespace PizzaBox.Storing.Repositories
             }
             else
             {
-                Console.WriteLine("Could not update user because it does not exists");
+                Console.WriteLine("Could not update store because it does not exists");
             }
             db.SaveChanges();
         }
-
+        
         public void Remove(string id)
         {
-            throw new NotImplementedException();
+            int idInt = Convert.ToInt32(id);
+            StoreInfo s = db.StoreInfo.FirstOrDefault(e => e.StoreId == idInt);
+            if (s.StoreId == idInt)
+            {
+                db.Remove(s);
+                db.SaveChanges();
+                Console.WriteLine("User Removed Successfully");
+            }
+            else
+            {
+                Console.WriteLine("Could not find store with this Id");
+                return;
+            }
+        }
+
+        public int NumStores()
+        {
+            return db.StoreInfo.Count();
+        }
+
+        public void SetStore(int id, ref StoreInfo st)
+        {
+            foreach (StoreInfo store in db.StoreInfo)
+            {
+                if (store.StoreId == id)
+                {
+                    st = new StoreInfo()
+                    {
+                        StoreId = store.StoreId,
+                        StoreName = store.StoreName,
+                        Address = store.Address,
+                        City = store.City,
+                        State = store.State,
+                        ZipCode = store.ZipCode,
+                        StorePrice = store.StorePrice
+                    };
+                    return;
+                }
+            }
+            st = null;
         }
     }
 }

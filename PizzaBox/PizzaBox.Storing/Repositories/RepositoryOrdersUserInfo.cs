@@ -10,7 +10,7 @@ using System.Linq;
 namespace PizzaBox.Storing.Repositories
 {
 
-    public class RepositoryOrdersUserInfo : IRepository<OrdersUserInfo>
+    public class RepositoryOrdersUserInfo : IRepoNoUpdate<OrdersUserInfo>
     {
         PizzaDBContext db;
         public RepositoryOrdersUserInfo(PizzaDBContext db)
@@ -19,22 +19,30 @@ namespace PizzaBox.Storing.Repositories
         }
         public void Add(OrdersUserInfo item)
         {
-            
+            //we need to see if user exists
+            if (db.Users.Any(e => e.Email == item.Email))
+            {
+                db.OrdersUserInfo.Add(item);
+            }
+            else
+            {
+                Console.WriteLine("User not found");
+            }
+            db.SaveChanges();
         }
 
         public IEnumerable<OrdersUserInfo> GetItems()
         {
-            throw new NotImplementedException();
+            var query = from e in db.OrdersUserInfo
+                        select e;
+
+            return query;
         }
 
-        public void Modify(OrdersUserInfo item)
-        {
-            throw new NotImplementedException();
-        }
 
         public void Remove(string id)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

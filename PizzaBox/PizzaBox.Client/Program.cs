@@ -25,11 +25,17 @@ namespace PizzaBox.Client
             var options = optionsBuilder.Options;
             PizzaDBContext db = new PizzaDBContext(options);
 
+            //All repos instantiated
             RepositoryUsers repositoryUsers = new RepositoryUsers(db);
             RepositoryStoreInfo repositoryStoreInfo = new RepositoryStoreInfo(db);
+            RepositoryOrdersUserInfo repositoryOrdersUserInfo = new RepositoryOrdersUserInfo(db);
+            RepositoryOrdersPizzaInfo repositoryOrdersPizzaInfo = new RepositoryOrdersPizzaInfo(db);
+            RepositoryPizzas repositoryPizzas = new RepositoryPizzas(db);
+            RepositoryStoreOrdersInfo repositoryStoreOrdersInfo = new RepositoryStoreOrdersInfo(db);
+
 
             Users u = null; //user that is to be logged in
-
+            
             int mainMenuChoice = 0;
             while (true)
             {
@@ -43,6 +49,8 @@ namespace PizzaBox.Client
                 {
                     Console.Write("Select an option: ");
                     mainMenuChoice = Convert.ToInt32(Console.ReadLine());
+
+///////////////////////// Sign Up ////////////////////////////////////////
                     if (mainMenuChoice == 1)
                     {
                         string email, password, fname, lname, phone;
@@ -89,7 +97,7 @@ namespace PizzaBox.Client
                             Console.Write("Enter email: ");
                             email = Console.ReadLine();
 
-                            Console.Write("Enter password (must be 6 or more characters): ");
+                            Console.Write("Enter password: ");
                             password = Console.ReadLine();
 
                             repositoryUsers.SignIn(email, password, ref u);
@@ -101,157 +109,241 @@ namespace PizzaBox.Client
                             }
                             else
                             {
-                                Console.WriteLine("Could not find user. Please try again.");
+                                Console.WriteLine("Could not find user. Would you like to try again? y/n: ");
+                                string choice = Console.ReadLine();
+                                if (choice == "y" || choice == "Y")
+                                {
+                                    Console.WriteLine();
+                                    continue;
+                                }
+                                else
+                                {
+                                    break;
+                                }
                             }
                         }
-                        //Signed In Menu
-                        int signedInMenuChoice = 0;
-                        Console.WriteLine("1. Place an order");
-                        Console.WriteLine("2. View Purchace history");
-                        Console.WriteLine("3. View Profile");
-                        Console.WriteLine("4. Update Profile");
-                        Console.WriteLine("5. Exit");
-                        try
+                        if (u != null)
                         {
-                            Console.Write("Select an option: ");
-                            signedInMenuChoice = Convert.ToInt32(Console.ReadLine());
-                            if (signedInMenuChoice == 1)
+                            //Signed In Menu
+                            int signedInMenuChoice = 0;
+                            Console.WriteLine("1. Place an order");
+                            Console.WriteLine("2. View Your Purchace history");
+                            Console.WriteLine("3. View Your Profile");
+                            Console.WriteLine("4. Update Your Profile");
+                            Console.WriteLine("5. Remove Account");
+                            Console.WriteLine("6. Create Store");
+                            Console.WriteLine("7. View Store Orders");
+                            Console.WriteLine("8. Modify Store");
+                            Console.WriteLine("9. Remove Store");
+                            Console.WriteLine("10. Exit");
+                            try
                             {
-                               
-
-                            }
-                            else if (signedInMenuChoice == 2)
-                            {
-                                
-                            }
-                            else if (signedInMenuChoice == 3)
-                            {
-                                Console.WriteLine($"Email: {u.Email}");
-                                Console.WriteLine($"Password: {u.Password}");
-                                Console.WriteLine($"First Name: {u.FirstName}");
-                                Console.WriteLine($"Last Name: {u.LastName}");
-                                Console.WriteLine($"Phone: {u.Phone}\n");
-                            }
-                            else if (signedInMenuChoice == 4)
-                            {
-                                string password = u.Password;
-                                string fname = u.FirstName;
-                                string lname = u.LastName;
-                                string phone = u.Phone;
-
-                                string decision;
-                                while (true)
+                                Console.Write("Select an option: ");
+                                signedInMenuChoice = Convert.ToInt32(Console.ReadLine());
+                                if (signedInMenuChoice == 1)//Place order
                                 {
-                                    Console.Write("Change password? y/n ");
-                                    decision = Console.ReadLine();
-                                    if (decision == "y" || decision == "Y")
+                                    if (repositoryStoreInfo.NumStores() == 0)
                                     {
-                                        Console.Write("New Password: ");
-                                        password = Console.ReadLine();
-                                        break;
-                                    }
-                                    else if (decision == "n" || decision == "N")
-                                    {
-                                        break;
+                                        Console.WriteLine("You must create a store first\n");
                                     }
                                     else
                                     {
-                                        Console.WriteLine("Invalid option\n");
+                                        StoreInfo si = null;
+                                        Console.WriteLine("Select a store by Id: ");
+                                        var stores = repositoryStoreInfo.GetItems();
+                                        int storeChoice;
+                                        foreach (var st in stores)
+                                        {
+                                            Console.WriteLine($"Store # {st.StoreId}\n{st.StoreName}\n{st.Address}\n{st.City}\n{st.State}\n{st.ZipCode}\nPizza starts at ${st.StorePrice}\n");
+                                        }
+                                        Console.Write("Selected store: ");
+                                        try
+                                        {
+                                            storeChoice = Convert.ToInt32(Console.ReadLine());
+                                            repositoryStoreInfo.SetStore(storeChoice, ref si);
+                                            if (si != null)
+                                            {
+
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine("Store not found\n");
+                                            }
+                                            
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            Console.WriteLine("Please input a number");
+                                        }
+                                        
+                                      
                                     }
+                                    
+
+
                                 }
-
-                                while (true)
+                                else if (signedInMenuChoice == 2)
                                 {
-                                    Console.Write("Change First Name? y/n ");
-                                    decision = Console.ReadLine();
-                                    if (decision == "y" || decision == "Y")
-                                    {
-                                        Console.Write("New First Name: ");
-                                        fname = Console.ReadLine();
-                                        break;
-                                    }
-                                    else if (decision == "n" || decision == "N")
-                                    {
-                                        break;
-                                    }
-                                    else
-                                    {
-                                        Console.WriteLine("Invalid option\n");
-                                    }
+
                                 }
-
-                                while (true)
+                                else if (signedInMenuChoice == 3)
                                 {
-                                    Console.Write("Change Last Name? y/n ");
-                                    decision = Console.ReadLine();
-                                    if (decision == "y" || decision == "Y")
-                                    {
-                                        Console.Write("New Last Name: ");
-                                        lname = Console.ReadLine();
-                                        break;
-                                    }
-                                    else if (decision == "n" || decision == "N")
-                                    {
-                                        break;
-                                    }
-                                    else
-                                    {
-                                        Console.WriteLine("Invalid option\n");
-                                    }
+                                    Console.WriteLine($"Email: {u.Email}");
+                                    Console.WriteLine($"Password: {u.Password}");
+                                    Console.WriteLine($"First Name: {u.FirstName}");
+                                    Console.WriteLine($"Last Name: {u.LastName}");
+                                    Console.WriteLine($"Phone: {u.Phone}\n");
                                 }
-
-                                while (true)
+                                else if (signedInMenuChoice == 4)
                                 {
-                                    Console.Write("Change Phone? y/n ");
-                                    decision = Console.ReadLine();
-                                    if (decision == "y" || decision == "Y")
+                                    string password = u.Password;
+                                    string fname = u.FirstName;
+                                    string lname = u.LastName;
+                                    string phone = u.Phone;
+
+                                    string decision;
+                                    while (true)
                                     {
-                                        Console.Write("New Phone: ");
-                                        phone = Console.ReadLine();
-                                        break;
+                                        Console.Write("Change password? y/n ");
+                                        decision = Console.ReadLine();
+                                        if (decision == "y" || decision == "Y")
+                                        {
+                                            Console.Write("New Password: ");
+                                            password = Console.ReadLine();
+                                            break;
+                                        }
+                                        else if (decision == "n" || decision == "N")
+                                        {
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("Invalid option\n");
+                                        }
                                     }
-                                    else if (decision == "n" || decision == "N")
+
+                                    while (true)
                                     {
-                                        break;
+                                        Console.Write("Change First Name? y/n ");
+                                        decision = Console.ReadLine();
+                                        if (decision == "y" || decision == "Y")
+                                        {
+                                            Console.Write("New First Name: ");
+                                            fname = Console.ReadLine();
+                                            break;
+                                        }
+                                        else if (decision == "n" || decision == "N")
+                                        {
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("Invalid option\n");
+                                        }
                                     }
-                                    else
+
+                                    while (true)
                                     {
-                                        Console.WriteLine("Invalid option\n");
+                                        Console.Write("Change Last Name? y/n ");
+                                        decision = Console.ReadLine();
+                                        if (decision == "y" || decision == "Y")
+                                        {
+                                            Console.Write("New Last Name: ");
+                                            lname = Console.ReadLine();
+                                            break;
+                                        }
+                                        else if (decision == "n" || decision == "N")
+                                        {
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("Invalid option\n");
+                                        }
                                     }
+
+                                    while (true)
+                                    {
+                                        Console.Write("Change Phone? y/n ");
+                                        decision = Console.ReadLine();
+                                        if (decision == "y" || decision == "Y")
+                                        {
+                                            Console.Write("New Phone: ");
+                                            phone = Console.ReadLine();
+                                            break;
+                                        }
+                                        else if (decision == "n" || decision == "N")
+                                        {
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("Invalid option\n");
+                                        }
+                                    }
+
+                                    Users temp = new Users()
+                                    {
+                                        Email = u.Email,
+                                        Password = password,
+                                        FirstName = fname,
+                                        LastName = lname,
+                                        Phone = phone
+                                    };
+
+                                    repositoryUsers.Modify(temp);
+
                                 }
-
-                                Users temp = new Users()
+                                else if (signedInMenuChoice == 5)
                                 {
-                                    Email = u.Email,
-                                    Password = password,
-                                    FirstName = fname,
-                                    LastName = lname,
-                                    Phone = phone
-                                };
+                                    repositoryUsers.Remove(u.Email);
+                                    u = null;
+                                    break;
+                                }
+                                else if (signedInMenuChoice == 6)
+                                {
 
-                                repositoryUsers.Modify(temp);
+                                    Console.Write("Store Name: ");
+                                }
+                                else if (signedInMenuChoice == 7)
+                                {
+                                    
+                                }
+                                else if (signedInMenuChoice == 8)
+                                {
 
+                                }
+                                else if (signedInMenuChoice == 9)
+                                {
+                                 
+                                }
+                                else if (signedInMenuChoice == 10)
+                                {
+                                    break;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("You must type a valid option!\n");
+                                }
                             }
-                            else if(signedInMenuChoice == 5)
+                            catch (Exception e)
                             {
-                                break;
-                            }
-                            else
-                            {
-                                Console.WriteLine("You must type a valid option!\n");
+                                Console.WriteLine("Please input a number\n");
                             }
                         }
-                        catch (Exception e)
-                        {
-                            Console.WriteLine("Please input a number\n");
-                        }
+                       
 
 
                     }
 
 
-//////////////////////////////////////////////////////////////////////////////////////
 
+
+
+
+
+
+/////////////////////////////////////Exit ////////////////////////////////////////////////
                     else if (mainMenuChoice == 3)
                     {
                         break;

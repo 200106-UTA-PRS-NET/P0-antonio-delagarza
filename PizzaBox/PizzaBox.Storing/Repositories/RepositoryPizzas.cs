@@ -9,8 +9,11 @@ using System.Linq;
 
 namespace PizzaBox.Storing.Repositories
 {
-    public class RepositoryPizzas : IRepository<Pizzas>
+    public class RepositoryPizzas
     {
+
+        private enum size {Small=1, Medium, Large, Extra_Large};
+        private enum crust {Original=1, Hand_Tossed, Thin, Stuffed};
 
         PizzaDBContext db;
         public RepositoryPizzas(PizzaDBContext db)
@@ -18,24 +21,29 @@ namespace PizzaBox.Storing.Repositories
             this.db = db ?? throw new ArgumentNullException(nameof(db));
         }
 
-        public void Add(Pizzas employee)
+        public void Add(Pizzas item)
         {
-            throw new NotImplementedException();
+            if (db.Pizzas.Any(e => e.PizzaId == item.PizzaId))
+            {
+                Console.WriteLine("user already with this email exists");
+            }
+            else
+            {
+                db.Pizzas.Add(item);
+                Console.WriteLine("Pizza craeted successfully");
+            }
+            db.SaveChanges();
         }
 
         public IEnumerable<Pizzas> GetItems()
         {
-            throw new NotImplementedException();
+            var query = from e in db.Pizzas
+                        select e;
+
+            return query;
         }
 
-        public void Modify(Pizzas employee)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Remove(string id)
-        {
-            throw new NotImplementedException();
-        }
+      
+        
     }
 }

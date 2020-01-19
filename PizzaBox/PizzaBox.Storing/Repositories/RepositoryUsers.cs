@@ -66,6 +66,7 @@ namespace PizzaBox.Storing.Repositories
             {
                 db.Remove(u);
                 db.SaveChanges();
+                Console.WriteLine("User Removed Successfully");
             }
             else
             {
@@ -89,11 +90,14 @@ namespace PizzaBox.Storing.Repositories
                           LastName = user.LastName,
                           Phone = user.Phone
                         };//email and password matched
+                        return;
                     }
                     u = null; //email matched but not the password
+                    return;
                 }
             }
             u = null; //no email found
+
         }
 
         
