@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 namespace PizzaBox.Domain.Models
 {
-    public partial class Pizzas
+    public partial class PresetPizzas
     {
-        public Pizzas()
+        public PresetPizzas()
         {
-            OrdersPizzaInfo = new HashSet<OrdersPizzaInfo>();
+            StorePresetPizzas = new HashSet<StorePresetPizzas>();
         }
 
-        public int PizzaId { get; set; }
+        public string PizzaName { get; set; }
         public string Size { get; set; }
         public string Crust { get; set; }
         public string CrustFlavor { get; set; }
@@ -22,6 +22,6 @@ namespace PizzaBox.Domain.Models
         public string Topping3 { get; set; }
         public decimal? Price { get; set; }
 
-        public virtual ICollection<OrdersPizzaInfo> OrdersPizzaInfo { get; set; }
+        public virtual ICollection<StorePresetPizzas> StorePresetPizzas { get; set; }
     }
 }

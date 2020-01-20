@@ -41,5 +41,14 @@ namespace PizzaBox.Storing.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<OrdersPizzaInfo> GetOrdersPizzas(int id)
+        {
+            var query = from e in db.OrdersPizzaInfo
+                        where e.OrderId == id
+                        select e;
+
+            return query;
+        }
     }
 }

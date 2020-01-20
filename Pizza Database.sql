@@ -31,15 +31,12 @@ create table PizzaBox.Pizzas(
 	topping1 varchar(100) not null,
 	topping2 varchar(100),
 	topping3 varchar(100),
-	veggie1 varchar(100),
-	veggie2 varchar(100),
-	veggie3 varchar(100),
 	price money,
 	--constraints
 	constraint pk_pizzas primary key(pizzaId)
 
 );
-
+alter table PizzaBox.Pizzas drop column veggie1, veggie2, veggie3;
 -------------Orders tables----------
 create table PizzaBox.OrdersUserInfo(
 	orderId int identity (1,1),
@@ -83,9 +80,32 @@ create table PizzaBox.StoreOrdersInfo(
 	constraint fk_orders foreign key(orderId) references PizzaBox.OrdersUserInfo(orderId)
 );
 
-drop table PizzaBox.Users;
-drop table PizzaBox.Pizzas;
-drop table PizzaBox.OrdersPizzaInfo;
-drop table PizzaBox.StoreInfo;
-drop table PizzaBox.OrdersUserInfo;
-drop table PizzaBox.StoreOrdersInfo;
+-----------------Present Pizzas Tables----------------
+create table PizzaBox.PresetPizzas(
+	presetPizzaId int identity(1, 1), 
+	size varchar(100) not null,
+	crust varchar(100) not null,
+	crustFlavor varchar(100),
+	sauce varchar(100) not null,
+	sauceAmount varchar(100) not null,
+	cheeseAmount varchar(100) not null,
+	topping1 varchar(100) not null,
+	topping2 varchar(100),
+	topping3 varchar(100),
+	price money,
+	--constraints
+	constraint pk_preset_pizzas primary key(presetPizzaId),
+	constraint unique_pizzas unique(size, crust, crustFlavor, sauce, sauceAmount, cheeseAmount, topping1, topping2, topping3)
+);
+
+create table PizzaBox.StorePresetPizzas (
+	storeId int, 
+	presetPizzaId int,
+	--constraints
+	constraint pk_store_preset primary key(storeId, presetPizzaId),
+	constraint fk_store_info foreign key(storeId) references PizzaBox.StoreInfo(storeId),
+	constraint fk_preset_pizza foreign key(presetPizzaId) references PizzaBox.PresetPizzas(presetPizzaId)
+
+);
+
+alter table PizzaBox.OrdersPizzaInfo drop column price;

@@ -8,6 +8,7 @@ namespace PizzaBox.Domain.Models
         public StoreInfo()
         {
             StoreOrdersInfo = new HashSet<StoreOrdersInfo>();
+            StorePresetPizzas = new HashSet<StorePresetPizzas>();
         }
 
         public int StoreId { get; set; }
@@ -19,5 +20,6 @@ namespace PizzaBox.Domain.Models
         public decimal StorePrice { get; set; }
 
         public virtual ICollection<StoreOrdersInfo> StoreOrdersInfo { get; set; }
+        public virtual ICollection<StorePresetPizzas> StorePresetPizzas { get; set; }
     }
 }

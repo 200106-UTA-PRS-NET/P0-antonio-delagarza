@@ -97,5 +97,29 @@ namespace PizzaBox.Storing.Repositories
             }
             st = null;
         }
+
+        public bool FindStore(int id)
+        {
+            foreach (StoreInfo store in db.StoreInfo)
+            {
+                if (store.StoreId == id)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public string GetStoreName(int id)
+        {
+            foreach (StoreInfo store in db.StoreInfo)
+            {
+                if (store.StoreId == id)
+                {
+                    return store.StoreName;
+                }
+            }
+            return "";
+        }
     }
 }

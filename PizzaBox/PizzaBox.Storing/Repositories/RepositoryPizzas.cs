@@ -12,8 +12,14 @@ namespace PizzaBox.Storing.Repositories
     public class RepositoryPizzas
     {
 
-        private enum size {Small=1, Medium, Large, Extra_Large};
-        private enum crust {Original=1, Hand_Tossed, Thin, Stuffed};
+        public enum SizeAvailable {Small=1, Medium, Large, Extra_Large};
+        public enum CrustAvailable { Original=1, Hand_Tossed, Thin, Stuffed};
+        public enum CrustFlavorAvailable { No_Flavor=1, Garlic_Buttery_Blend, Toasted_Parmesan };
+        public enum SauceAvailable { Marinara=1, Creamy_Garlic_Parmesan, Barbeque, Buffalo };
+        public enum AmountsAvailable { Light = 1, Regular, Extra};
+        public enum ToppingsAvailable
+        { Pepperoni = 1, Italial_Sausage, Meatball, Ham, Bacon, Grilled_Chicken, Beef_Pork,
+                                Mushroom, Spinach, Onion, Olives, Green_Bell_Peppers, Banana_Peppers, Pineapple, Jalapenos, Tomatoes};
 
         PizzaDBContext db;
         public RepositoryPizzas(PizzaDBContext db)
@@ -43,6 +49,17 @@ namespace PizzaBox.Storing.Repositories
             return query;
         }
 
+        public Pizzas GetPizzasbyId(int id)
+        {
+            foreach(Pizzas p in db.Pizzas)
+            {
+                if (p.PizzaId == id)
+                {
+                    return p;
+                }
+            }
+            return null;
+        }
       
         
     }

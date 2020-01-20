@@ -46,5 +46,26 @@ namespace PizzaBox.Storing.Repositories
         {
             
         }
+
+        public int GetStoreId(int orderId)
+        {
+            foreach (StoreOrdersInfo st in db.StoreOrdersInfo)
+            {
+                if (st.OrderId == orderId)
+                {
+                    return st.StoreId;
+                }
+            }
+            return -1;
+        }
+
+        public IEnumerable<StoreOrdersInfo> GetStoreOrders(int id)
+        {
+            var query = from e in db.StoreOrdersInfo
+                        where e.StoreId == id
+                        select e;
+
+            return query;
+        }
     }
 }

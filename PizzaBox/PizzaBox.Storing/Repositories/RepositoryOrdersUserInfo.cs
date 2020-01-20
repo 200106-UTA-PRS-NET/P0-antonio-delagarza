@@ -23,6 +23,7 @@ namespace PizzaBox.Storing.Repositories
             if (db.Users.Any(e => e.Email == item.Email))
             {
                 db.OrdersUserInfo.Add(item);
+                Console.WriteLine("Order Created successfully");
             }
             else
             {
@@ -43,6 +44,25 @@ namespace PizzaBox.Storing.Repositories
         public void Remove(string id)
         {
             
+        }
+        public IEnumerable<OrdersUserInfo> GetUserPurchases(string email)
+        {
+            var query = from e in db.OrdersUserInfo
+                        where e.Email == email
+                        select e;
+
+            return query;
+        }
+        public OrdersUserInfo GetStoreOrderDetails(int id)
+        {
+            foreach(OrdersUserInfo o in db.OrdersUserInfo)
+            {
+                if (o.OrderId == id)
+                {
+                    return o;
+                }
+            }
+            return null;
         }
     }
 }

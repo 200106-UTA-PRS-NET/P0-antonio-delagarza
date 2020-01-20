@@ -18,8 +18,10 @@ namespace PizzaBox.Domain.Models
         public virtual DbSet<OrdersPizzaInfo> OrdersPizzaInfo { get; set; }
         public virtual DbSet<OrdersUserInfo> OrdersUserInfo { get; set; }
         public virtual DbSet<Pizzas> Pizzas { get; set; }
+        public virtual DbSet<PresetPizzas> PresetPizzas { get; set; }
         public virtual DbSet<StoreInfo> StoreInfo { get; set; }
         public virtual DbSet<StoreOrdersInfo> StoreOrdersInfo { get; set; }
+        public virtual DbSet<StorePresetPizzas> StorePresetPizzas { get; set; }
         public virtual DbSet<Users> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -27,7 +29,7 @@ namespace PizzaBox.Domain.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=DESKTOP-6SDGA9L\\SQLEXPRESS;Database=PizzaDB;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=DESKTOP-6SDGA9L\\SQLEXPRESS; Database=PizzaDb; Trusted_Connection=True");
             }
         }
 
@@ -43,10 +45,6 @@ namespace PizzaBox.Domain.Models
                 entity.Property(e => e.OrderId).HasColumnName("orderId");
 
                 entity.Property(e => e.PizzaId).HasColumnName("pizzaId");
-
-                entity.Property(e => e.Price)
-                    .HasColumnName("price")
-                    .HasColumnType("money");
 
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.OrdersPizzaInfo)
@@ -150,19 +148,76 @@ namespace PizzaBox.Domain.Models
                     .HasColumnName("topping3")
                     .HasMaxLength(100)
                     .IsUnicode(false);
+            });
 
-                entity.Property(e => e.Veggie1)
-                    .HasColumnName("veggie1")
+            modelBuilder.Entity<PresetPizzas>(entity =>
+            {
+                entity.HasKey(e => e.PizzaName)
+                    .HasName("pk_preset_pizzas");
+
+                entity.ToTable("PresetPizzas", "PizzaBox");
+
+                entity.HasIndex(e => new { e.Size, e.Crust, e.CrustFlavor, e.Sauce, e.SauceAmount, e.CheeseAmount, e.Topping1, e.Topping2, e.Topping3 })
+                    .HasName("unique_pizzas")
+                    .IsUnique();
+
+                entity.Property(e => e.PizzaName)
+                    .HasColumnName("pizzaName")
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Veggie2)
-                    .HasColumnName("veggie2")
+                entity.Property(e => e.CheeseAmount)
+                    .IsRequired()
+                    .HasColumnName("cheeseAmount")
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Veggie3)
-                    .HasColumnName("veggie3")
+                entity.Property(e => e.Crust)
+                    .IsRequired()
+                    .HasColumnName("crust")
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CrustFlavor)
+                    .HasColumnName("crustFlavor")
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Price)
+                    .HasColumnName("price")
+                    .HasColumnType("money");
+
+                entity.Property(e => e.Sauce)
+                    .IsRequired()
+                    .HasColumnName("sauce")
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.SauceAmount)
+                    .IsRequired()
+                    .HasColumnName("sauceAmount")
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Size)
+                    .IsRequired()
+                    .HasColumnName("size")
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Topping1)
+                    .IsRequired()
+                    .HasColumnName("topping1")
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Topping2)
+                    .HasColumnName("topping2")
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Topping3)
+                    .HasColumnName("topping3")
                     .HasMaxLength(100)
                     .IsUnicode(false);
             });
@@ -173,6 +228,10 @@ namespace PizzaBox.Domain.Models
                     .HasName("pk_store");
 
                 entity.ToTable("StoreInfo", "PizzaBox");
+
+                entity.HasIndex(e => new { e.StoreName, e.Address, e.City, e.State, e.ZipCode })
+                    .HasName("unique_stores")
+                    .IsUnique();
 
                 entity.Property(e => e.StoreId).HasColumnName("storeId");
 
@@ -233,6 +292,33 @@ namespace PizzaBox.Domain.Models
                     .HasForeignKey(d => d.StoreId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_store");
+            });
+
+            modelBuilder.Entity<StorePresetPizzas>(entity =>
+            {
+                entity.HasKey(e => new { e.StoreId, e.PizzaName })
+                    .HasName("pk_store_preset");
+
+                entity.ToTable("StorePresetPizzas", "PizzaBox");
+
+                entity.Property(e => e.StoreId).HasColumnName("storeId");
+
+                entity.Property(e => e.PizzaName)
+                    .HasColumnName("pizzaName")
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.PizzaNameNavigation)
+                    .WithMany(p => p.StorePresetPizzas)
+                    .HasForeignKey(d => d.PizzaName)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_preset_pizza");
+
+                entity.HasOne(d => d.Store)
+                    .WithMany(p => p.StorePresetPizzas)
+                    .HasForeignKey(d => d.StoreId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_store_info");
             });
 
             modelBuilder.Entity<Users>(entity =>
