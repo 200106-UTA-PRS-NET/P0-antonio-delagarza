@@ -19,7 +19,16 @@ namespace PizzaBox.Storing.Repositories
 
         public void Add(PresetPizzas item)
         {
-            
+            if (db.PresetPizzas.Any(e => e.PizzaName == item.PizzaName))
+            {
+                Console.WriteLine("Pizza with this name already exists");
+            }
+            else
+            {
+                db.PresetPizzas.Add(item);
+                Console.WriteLine("Pizza craeted successfully");
+            }
+            db.SaveChanges();
         }
 
         public IEnumerable<PresetPizzas> GetItems()

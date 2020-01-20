@@ -177,7 +177,7 @@ namespace PizzaBox.Client
                     {
                         if (repositoryStoreInfo.NumStores() == 0)
                         {
-                            Console.WriteLine("You must create a store first\n");
+                            Console.WriteLine("There are no stores in existance\n");
                         }
                         else
                         {
@@ -203,14 +203,23 @@ namespace PizzaBox.Client
                                             Email = u.Email,
                                             OrderDateTime = DateTime.Today
                                         };
-
+                                        StoreOrdersInfo storeOrdersInfo = null;
                                         /////Start of the order
+                                        storeOrdersInfo = new StoreOrdersInfo()
+                                        {
+                                            StoreId = si.StoreId,
+                                            OrderId = ordersUserInfo.OrderId
+
+                                        };
+                                        repositoryStoreOrdersInfo.Add(storeOrdersInfo);
+
+                                        repositoryOrdersUserInfo.Add(ordersUserInfo);
                                         while (true)
                                         {
                                             Pizzas pizza = null;
                                             PresetPizzas presetPizza = null;
                                             OrdersPizzaInfo ordersPizzaInfo = null;
-                                            StoreOrdersInfo storeOrdersInfo = null;
+                                            
                                             //this will return a list of teh pizza names of the store
                                             var storePizzas = repositoryStorePresetPizzas.GetStorePizzas(si.StoreId);
                                             int i = 1;
@@ -251,25 +260,15 @@ namespace PizzaBox.Client
                                                         Price = presetPizza.Price
                                                     };
                                                     repositoryPizzas.Add(pizza);
-                                                    
-
-
-                                                    repositoryOrdersUserInfo.Add(ordersUserInfo);
-                                                    storeOrdersInfo = new StoreOrdersInfo()
-                                                    {
-                                                        StoreId = si.StoreId,
-                                                        OrderId = ordersUserInfo.OrderId
-
-                                                    };
-                                                    repositoryStoreOrdersInfo.Add(storeOrdersInfo);
-
+                                                
 
                                                     ordersPizzaInfo = new OrdersPizzaInfo()
                                                     {
-                                                        OrderId = ordersPizzaInfo.OrderId,
+                                                        OrderId = ordersUserInfo.OrderId,
                                                         PizzaId = pizza.PizzaId,
 
                                                     };
+                                                    repositoryOrdersPizzaInfo.Add(ordersPizzaInfo);
                                                     Console.WriteLine("Would you like to add another pizza? y/n: ");
                                                     string select = Console.ReadLine();
                                                     if (select == "y" || select == "Y")
@@ -280,6 +279,7 @@ namespace PizzaBox.Client
                                                     {
                                                         break;
                                                     }
+
                                                 }
                                                 else
                                                 {
@@ -331,7 +331,7 @@ namespace PizzaBox.Client
                                                         Console.WriteLine($"{j + 1} {names.GetValue(j)}");
                                                     }
                                                     int crustSelected = Convert.ToInt32(Console.ReadLine());
-                                                    if (Enum.IsDefined(typeof(RepositoryPizzas.SizeAvailable), crustSelected))
+                                                    if (Enum.IsDefined(typeof(RepositoryPizzas.CrustAvailable), crustSelected))
                                                     {
                                                         crust = names.GetValue(crustSelected - 1).ToString();
                                                         if (crustSelected == 1)
@@ -360,7 +360,7 @@ namespace PizzaBox.Client
                                                         Console.WriteLine($"{j + 1} {names.GetValue(j)}");
                                                     }
                                                     int crustFlavorSelected = Convert.ToInt32(Console.ReadLine());
-                                                    if (Enum.IsDefined(typeof(RepositoryPizzas.SizeAvailable), crustFlavorSelected))
+                                                    if (Enum.IsDefined(typeof(RepositoryPizzas.CrustFlavorAvailable), crustFlavorSelected))
                                                     {
                                                         crustFlavor = names.GetValue(crustFlavorSelected - 1).ToString();
                                                         break;
@@ -381,7 +381,7 @@ namespace PizzaBox.Client
                                                         Console.WriteLine($"{j + 1} {names.GetValue(j)}");
                                                     }
                                                     int sauceSelected = Convert.ToInt32(Console.ReadLine());
-                                                    if (Enum.IsDefined(typeof(RepositoryPizzas.SizeAvailable), sauceSelected))
+                                                    if (Enum.IsDefined(typeof(RepositoryPizzas.SauceAvailable), sauceSelected))
                                                     {
                                                         sauce = names.GetValue(sauceSelected - 1).ToString();
                                                         break;
@@ -402,7 +402,7 @@ namespace PizzaBox.Client
                                                         Console.WriteLine($"{j + 1} {names.GetValue(j)}");
                                                     }
                                                     int AmountSelected = Convert.ToInt32(Console.ReadLine());
-                                                    if (Enum.IsDefined(typeof(RepositoryPizzas.SizeAvailable), AmountSelected))
+                                                    if (Enum.IsDefined(typeof(RepositoryPizzas.AmountsAvailable), AmountSelected))
                                                     {
                                                         sauceAmount = names.GetValue(AmountSelected - 1).ToString();
                                                         if (AmountSelected == 3)
@@ -427,7 +427,7 @@ namespace PizzaBox.Client
                                                         Console.WriteLine($"{j + 1} {names.GetValue(j)}");
                                                     }
                                                     int AmountSelected = Convert.ToInt32(Console.ReadLine());
-                                                    if (Enum.IsDefined(typeof(RepositoryPizzas.SizeAvailable), AmountSelected))
+                                                    if (Enum.IsDefined(typeof(RepositoryPizzas.AmountsAvailable), AmountSelected))
                                                     {
                                                         cheeseAmount = names.GetValue(AmountSelected - 1).ToString();
                                                         break;
@@ -448,7 +448,7 @@ namespace PizzaBox.Client
                                                         Console.WriteLine($"{j+1} {names.GetValue(j)}");
                                                     }
                                                     int toppingSelected = Convert.ToInt32(Console.ReadLine());
-                                                    if (Enum.IsDefined(typeof(RepositoryPizzas.SizeAvailable), toppingSelected))
+                                                    if (Enum.IsDefined(typeof(RepositoryPizzas.ToppingsAvailable), toppingSelected))
                                                     {
                                                         topping1 = names.GetValue(toppingSelected - 1).ToString();
                                                         break;
@@ -474,7 +474,7 @@ namespace PizzaBox.Client
                                                             Console.WriteLine($"{j+1} {names.GetValue(j)}");
                                                         }
                                                         int toppingSelected = Convert.ToInt32(Console.ReadLine());
-                                                        if (Enum.IsDefined(typeof(RepositoryPizzas.SizeAvailable), toppingSelected))
+                                                        if (Enum.IsDefined(typeof(RepositoryPizzas.ToppingsAvailable), toppingSelected))
                                                         {
                                                             topping2 = names.GetValue(toppingSelected - 1).ToString();
                                                             price += 0.50M;
@@ -499,7 +499,7 @@ namespace PizzaBox.Client
                                                                 Console.WriteLine($"{j + 1} {names.GetValue(j)}");
                                                             }
                                                             int toppingSelected = Convert.ToInt32(Console.ReadLine());
-                                                            if (Enum.IsDefined(typeof(RepositoryPizzas.SizeAvailable), toppingSelected))
+                                                            if (Enum.IsDefined(typeof(RepositoryPizzas.ToppingsAvailable), toppingSelected))
                                                             {
                                                                 topping3 = names.GetValue(toppingSelected - 1).ToString();
                                                                 price += 0.50M;
@@ -535,20 +535,9 @@ namespace PizzaBox.Client
                                                 repositoryPizzas.Add(pizza);
 
 
-
-                                                repositoryOrdersUserInfo.Add(ordersUserInfo);
-                                                storeOrdersInfo = new StoreOrdersInfo()
-                                                {
-                                                    StoreId = si.StoreId,
-                                                    OrderId = ordersUserInfo.OrderId
-
-                                                };
-                                                repositoryStoreOrdersInfo.Add(storeOrdersInfo);
-
-
                                                 ordersPizzaInfo = new OrdersPizzaInfo()
                                                 {
-                                                    OrderId = ordersPizzaInfo.OrderId,
+                                                    OrderId = ordersUserInfo.OrderId,
                                                     PizzaId = pizza.PizzaId,
 
                                                 };
@@ -572,9 +561,8 @@ namespace PizzaBox.Client
                                             }
 
                                         }
-                                        
-                                        
-                                }
+                                       
+                                    }
                                 else
                                 {
                                     Console.WriteLine("Store not found\n");
@@ -755,7 +743,7 @@ namespace PizzaBox.Client
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Please input a number\n");
+                        throw;
                 }
             }
         }
@@ -909,7 +897,7 @@ namespace PizzaBox.Client
                             Console.WriteLine($"{j + 1} {names.GetValue(j)}");
                         }
                         int crustSelected = Convert.ToInt32(Console.ReadLine());
-                        if (Enum.IsDefined(typeof(RepositoryPizzas.SizeAvailable), crustSelected))
+                        if (Enum.IsDefined(typeof(RepositoryPizzas.CrustAvailable), crustSelected))
                         {
                             crust = names.GetValue(crustSelected - 1).ToString();
                            
@@ -931,7 +919,7 @@ namespace PizzaBox.Client
                             Console.WriteLine($"{j+1} {names.GetValue(j)}");
                         }
                         int crustFlavorSelected = Convert.ToInt32(Console.ReadLine());
-                        if (Enum.IsDefined(typeof(RepositoryPizzas.SizeAvailable), crustFlavorSelected))
+                        if (Enum.IsDefined(typeof(RepositoryPizzas.CrustFlavorAvailable), crustFlavorSelected))
                         {
                             crustFlavor = names.GetValue(crustFlavorSelected - 1).ToString();
                             break;
@@ -952,7 +940,7 @@ namespace PizzaBox.Client
                             Console.WriteLine($"{j + 1} {names.GetValue(j)}");
                         }
                         int sauceSelected = Convert.ToInt32(Console.ReadLine());
-                        if (Enum.IsDefined(typeof(RepositoryPizzas.SizeAvailable), sauceSelected))
+                        if (Enum.IsDefined(typeof(RepositoryPizzas.SauceAvailable), sauceSelected))
                         {
                             sauce = names.GetValue(sauceSelected - 1).ToString();
                             break;
@@ -973,7 +961,7 @@ namespace PizzaBox.Client
                             Console.WriteLine($"{j + 1} {names.GetValue(j)}");
                         }
                         int AmountSelected = Convert.ToInt32(Console.ReadLine());
-                        if (Enum.IsDefined(typeof(RepositoryPizzas.SizeAvailable), AmountSelected))
+                        if (Enum.IsDefined(typeof(RepositoryPizzas.AmountsAvailable), AmountSelected))
                         {
                             sauceAmount = names.GetValue(AmountSelected - 1).ToString();
                             
@@ -995,7 +983,7 @@ namespace PizzaBox.Client
                             Console.WriteLine($"{j + 1} {names.GetValue(j)}");
                         }
                         int AmountSelected = Convert.ToInt32(Console.ReadLine());
-                        if (Enum.IsDefined(typeof(RepositoryPizzas.SizeAvailable), AmountSelected))
+                        if (Enum.IsDefined(typeof(RepositoryPizzas.AmountsAvailable), AmountSelected))
                         {
                             cheeseAmount = names.GetValue(AmountSelected - 1).ToString();
                             break;
@@ -1016,7 +1004,7 @@ namespace PizzaBox.Client
                             Console.WriteLine($"{j + 1} {names.GetValue(j)}");
                         }
                         int toppingSelected = Convert.ToInt32(Console.ReadLine());
-                        if (Enum.IsDefined(typeof(RepositoryPizzas.SizeAvailable), toppingSelected))
+                        if (Enum.IsDefined(typeof(RepositoryPizzas.ToppingsAvailable), toppingSelected))
                         {
                             topping1 = names.GetValue(toppingSelected - 1).ToString();
                             break;
@@ -1042,7 +1030,7 @@ namespace PizzaBox.Client
                                 Console.WriteLine($"{j + 1} {names.GetValue(j)}");
                             }
                             int toppingSelected = Convert.ToInt32(Console.ReadLine());
-                            if (Enum.IsDefined(typeof(RepositoryPizzas.SizeAvailable), toppingSelected))
+                            if (Enum.IsDefined(typeof(RepositoryPizzas.ToppingsAvailable), toppingSelected))
                             {
                                 topping2 = names.GetValue(toppingSelected - 1).ToString();
                                
@@ -1061,13 +1049,13 @@ namespace PizzaBox.Client
                             {
                                 var names = Enum.GetNames(typeof(RepositoryPizzas.ToppingsAvailable));
                                 var values = Enum.GetValues(typeof(RepositoryPizzas.ToppingsAvailable));
-                                Console.WriteLine("Select topping 1 ");
+                                Console.WriteLine("Select topping 3 ");
                                 for (int j = 0; j < names.Length; j++)
                                 {
                                     Console.WriteLine($"{j + 1} {names.GetValue(j)}");
                                 }
                                 int toppingSelected = Convert.ToInt32(Console.ReadLine());
-                                if (Enum.IsDefined(typeof(RepositoryPizzas.SizeAvailable), toppingSelected))
+                                if (Enum.IsDefined(typeof(RepositoryPizzas.ToppingsAvailable), toppingSelected))
                                 {
                                     topping3 = names.GetValue(toppingSelected - 1).ToString();
                                     

@@ -31,7 +31,7 @@ namespace PizzaBox.Storing.Repositories
         {
             if (db.Pizzas.Any(e => e.PizzaId == item.PizzaId))
             {
-                Console.WriteLine("user already with this email exists");
+                Console.WriteLine("Pizza with this id already exists");
             }
             else
             {

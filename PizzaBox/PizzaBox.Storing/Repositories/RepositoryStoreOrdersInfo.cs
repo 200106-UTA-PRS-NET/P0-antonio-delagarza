@@ -25,6 +25,7 @@ namespace PizzaBox.Storing.Repositories
             if (db.StoreInfo.Any(e => e.StoreId == item.StoreId) && db.OrdersUserInfo.Any(e => e.OrderId == item.OrderId))
             {
                 db.StoreOrdersInfo.Add(item);
+                Console.WriteLine("Order added to store");
             }
             else
             {
