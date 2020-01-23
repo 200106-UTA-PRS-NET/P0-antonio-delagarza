@@ -20,14 +20,24 @@ namespace PizzaBox.Storing.Repositories
         {
             if (db.Pizzas.Any(e => e.PizzaId == item.PizzaId) && db.OrdersUserInfo.Any(e => e.OrderId == item.OrderId))
             {
-                db.OrdersPizzaInfo.Add(item);
-                Console.WriteLine("Pizza added to the order");
+                try
+                {
+                    db.OrdersPizzaInfo.Add(item);
+                    db.SaveChanges();
+                    Console.WriteLine("Pizza added to the order");
+                }
+                catch (DbUpdateException ex)
+                {
+
+                    Console.WriteLine("Could not add to database");
+                }
+               
             }
             else
             {
-                Console.WriteLine("OrderID  or PizzaID not found");
+                Console.WriteLine("OrderID or PizzaID not found");
             }
-            db.SaveChanges();
+            
         }
 
         public IEnumerable<OrdersPizzaInfo> GetItems()

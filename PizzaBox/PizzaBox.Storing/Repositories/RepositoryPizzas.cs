@@ -35,10 +35,19 @@ namespace PizzaBox.Storing.Repositories
             }
             else
             {
-                db.Pizzas.Add(item);
-                Console.WriteLine("Pizza craeted successfully");
+                try
+                {
+                    db.Pizzas.Add(item);
+                    db.SaveChanges();
+                    Console.WriteLine("Pizza craeted successfully");
+                }
+                catch (DbUpdateException ex)
+                {
+                    Console.WriteLine("Could not add to database");
+                }
+                
             }
-            db.SaveChanges();
+            
         }
 
         public IEnumerable<Pizzas> GetItems()

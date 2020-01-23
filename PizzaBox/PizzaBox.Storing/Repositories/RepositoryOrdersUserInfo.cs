@@ -22,14 +22,23 @@ namespace PizzaBox.Storing.Repositories
             //we need to see if user exists
             if (db.Users.Any(e => e.Email == item.Email))
             {
-                db.OrdersUserInfo.Add(item);
-                Console.WriteLine("Order Created successfully");
+                try
+                {
+                    db.OrdersUserInfo.Add(item);
+                    db.SaveChanges();
+                    Console.WriteLine("Order Created successfully");
+                }
+                catch (DbUpdateException ex)
+                {
+                    Console.WriteLine("Could not add to database");
+                }
+                
             }
             else
             {
                 Console.WriteLine("User not found");
             }
-            db.SaveChanges();
+            
         }
 
         public IEnumerable<OrdersUserInfo> GetItems()
@@ -64,5 +73,7 @@ namespace PizzaBox.Storing.Repositories
             }
             return null;
         }
+
+       
     }
 }

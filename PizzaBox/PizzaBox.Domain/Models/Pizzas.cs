@@ -20,7 +20,7 @@ namespace PizzaBox.Domain.Models
         public string Topping1 { get; set; }
         public string Topping2 { get; set; }
         public string Topping3 { get; set; }
-        public decimal? Price { get; set; }
+        public decimal Price { get; set; }
 
         public virtual ICollection<OrdersPizzaInfo> OrdersPizzaInfo { get; set; }
     }

@@ -29,7 +29,7 @@ namespace PizzaBox.Domain.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=DESKTOP-6SDGA9L\\SQLEXPRESS; Database=PizzaDb; Trusted_Connection=True");
+                optionsBuilder.UseSqlServer("Server=DESKTOP-6SDGA9L\\SQLEXPRESS;Database=PizzaDB;Trusted_Connection=True;");
             }
         }
 
@@ -52,9 +52,9 @@ namespace PizzaBox.Domain.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Orders_User");
 
-                entity.HasOne(d => d.OrderNavigation)
+                entity.HasOne(d => d.Pizza)
                     .WithMany(p => p.OrdersPizzaInfo)
-                    .HasForeignKey(d => d.OrderId)
+                    .HasForeignKey(d => d.PizzaId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Pizza");
             });
@@ -134,7 +134,6 @@ namespace PizzaBox.Domain.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.Topping1)
-                    .IsRequired()
                     .HasColumnName("topping1")
                     .HasMaxLength(100)
                     .IsUnicode(false);
@@ -206,7 +205,6 @@ namespace PizzaBox.Domain.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.Topping1)
-                    .IsRequired()
                     .HasColumnName("topping1")
                     .HasMaxLength(100)
                     .IsUnicode(false);
@@ -338,11 +336,13 @@ namespace PizzaBox.Domain.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.FirstName)
+                    .IsRequired()
                     .HasColumnName("first_name")
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
                 entity.Property(e => e.LastName)
+                    .IsRequired()
                     .HasColumnName("last_name")
                     .HasMaxLength(100)
                     .IsUnicode(false);

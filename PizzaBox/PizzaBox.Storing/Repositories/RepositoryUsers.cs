@@ -24,13 +24,22 @@ namespace PizzaBox.Storing.Repositories
             if (db.Users.Any(e => e.Email == item.Email) || item.Email == null)
             {
                 Console.WriteLine("user already with this email exists");
+                return;
             }
             else
             {
-                db.Users.Add(item);
-                Console.WriteLine("User craeted successfully");
+                try
+                {
+                    db.Users.Add(item);
+                    db.SaveChanges();
+                    Console.WriteLine("User craeted successfully");
+                }
+                catch (DbUpdateException ex)
+                {
+                    Console.WriteLine("Could not add to database");
+                }
             }
-            db.SaveChanges();
+            
         }
 
         public IEnumerable<Users> GetItems()

@@ -26,10 +26,18 @@ namespace PizzaBox.Storing.Repositories
             }
             else
             {
-                db.StoreInfo.Add(item);
-                Console.WriteLine("Store craeted successfully");
+                try
+                {
+                    db.StoreInfo.Add(item);
+                    db.SaveChanges();
+                    Console.WriteLine("Store craeted successfully");
+                }
+                catch (DbUpdateException ex)
+                {
+                    Console.WriteLine("Could not add to database");
+                }
             }
-            db.SaveChanges();
+            
         }
 
         public IEnumerable<StoreInfo> GetItems()

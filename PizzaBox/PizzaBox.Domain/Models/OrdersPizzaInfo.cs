@@ -9,6 +9,6 @@ namespace PizzaBox.Domain.Models
         public int PizzaId { get; set; }
 
         public virtual OrdersUserInfo Order { get; set; }
-        public virtual Pizzas OrderNavigation { get; set; }
+        public virtual Pizzas Pizza { get; set; }
     }
 }

@@ -22,13 +22,23 @@ namespace PizzaBox.Storing.Repositories
             //We need to see if the store id and order id exist
             if (db.StoreInfo.Any(e => e.StoreId == item.StoreId) && db.PresetPizzas.Any(e => e.PizzaName == item.PizzaName))
             {
-                db.StorePresetPizzas.Add(item);
+                try
+                {
+                    db.StorePresetPizzas.Add(item);
+                    db.SaveChanges();
+                    Console.WriteLine("preset pizza addede succesfully");
+                }
+                catch (DbUpdateException ex)
+                {
+                    Console.WriteLine("Could not add to database");
+                }
+                
             }
             else
             {
                 Console.WriteLine("StoreID or Pizza Name not found");
             }
-            db.SaveChanges();
+           
         }
 
         public IEnumerable<StorePresetPizzas> GetItems()
