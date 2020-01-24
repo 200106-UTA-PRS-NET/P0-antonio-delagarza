@@ -379,7 +379,7 @@ namespace PizzaBox.Client
                                                                 }
                                                                 else if (j == 3)
                                                                 {
-                                                                    Console.WriteLine($"3 {names.GetValue(j)} ${si.StorePrice + 2M}");
+                                                                    Console.WriteLine($"4 {names.GetValue(j)} ${si.StorePrice + 2M}");
                                                                 }
                                                                 else
                                                                 {
@@ -387,12 +387,13 @@ namespace PizzaBox.Client
                                                                 }
                                                                
                                                             }
-                                                            Console.Write("Selected option: ");
+                                                            
                                                             int sizeSelected = 0;
                                                             while (true)
                                                             {
                                                                 try
                                                                 {
+                                                                    Console.Write("Selected option: ");
                                                                     sizeSelected = Convert.ToInt32(Console.ReadLine());
                                                                 }
                                                                 catch (FormatException)
@@ -449,12 +450,13 @@ namespace PizzaBox.Client
                                                                 
 
                                                             }
-                                                            Console.Write("Selected option: ");
+                                                            
                                                             int crustSelected = 0;
                                                             while (true)
                                                             {
                                                                 try
                                                                 {
+                                                                    Console.Write("Selected option: ");
                                                                     crustSelected = Convert.ToInt32(Console.ReadLine());
                                                                 }
                                                                 catch (FormatException)
@@ -493,12 +495,13 @@ namespace PizzaBox.Client
                                                             {
                                                                 Console.WriteLine($"{j + 1} {names.GetValue(j)}");
                                                             }
-                                                            Console.Write("Selected option: ");
+                                                            
                                                             int crustFlavorSelected = 0;
                                                             while (true)
                                                             {
                                                                 try
                                                                 {
+                                                                    Console.Write("Selected option: ");
                                                                     crustFlavorSelected = Convert.ToInt32(Console.ReadLine());
                                                                 }
                                                                 catch (FormatException)
@@ -529,12 +532,13 @@ namespace PizzaBox.Client
                                                             {
                                                                 Console.WriteLine($"{j + 1} {names.GetValue(j)}");
                                                             }
-                                                            Console.Write("Selected option: ");
+                                                            
                                                             int sauceSelected = 0;
                                                             while (true)
                                                             {
                                                                 try
                                                                 {
+                                                                    Console.Write("Selected option: ");
                                                                     sauceSelected = Convert.ToInt32(Console.ReadLine());
                                                                 }
                                                                 catch (FormatException)
@@ -565,12 +569,13 @@ namespace PizzaBox.Client
                                                             {
                                                                 Console.WriteLine($"{j + 1} {names.GetValue(j)}");
                                                             }
-                                                            Console.Write("Selected option: ");
+                                                            
                                                             int AmountSelected = 0;
                                                             while (true)
                                                             {
                                                                 try
                                                                 {
+                                                                    Console.Write("Selected option: ");
                                                                     AmountSelected = Convert.ToInt32(Console.ReadLine());
                                                                 }
                                                                 catch (FormatException)
@@ -605,12 +610,13 @@ namespace PizzaBox.Client
                                                             {
                                                                 Console.WriteLine($"{j + 1} {names.GetValue(j)}");
                                                             }
-                                                            Console.Write("Selected option: ");
+                                                            
                                                             int AmountSelected = 0;
                                                             while (true)
                                                             {
                                                                 try
                                                                 {
+                                                                    Console.Write("Selected option: ");
                                                                     AmountSelected = Convert.ToInt32(Console.ReadLine());
                                                                 }
                                                                 catch (FormatException)
@@ -646,12 +652,13 @@ namespace PizzaBox.Client
                                                                 {
                                                                     Console.WriteLine($"{j + 1} {names.GetValue(j)}");
                                                                 }
-                                                                Console.Write("Selected option: ");
+                                                                
                                                                 int toppingSelected = 0;
                                                                 while (true)
                                                                 {
                                                                     try
                                                                     {
+                                                                        Console.Write("Selected option: ");
                                                                         toppingSelected = Convert.ToInt32(Console.ReadLine());
                                                                     }
                                                                     catch (FormatException)
@@ -689,12 +696,13 @@ namespace PizzaBox.Client
                                                                     {
                                                                         Console.WriteLine($"{j + 1} {names.GetValue(j)}");
                                                                     }
-                                                                    Console.Write("Selected option: ");
+                                                                    
                                                                     int toppingSelected = 0;
                                                                     while (true)
                                                                     {
                                                                         try
                                                                         {
+                                                                            Console.Write("Selected option: ");
                                                                             toppingSelected = Convert.ToInt32(Console.ReadLine());
                                                                         }
                                                                         catch (FormatException)
@@ -728,12 +736,13 @@ namespace PizzaBox.Client
                                                                         {
                                                                             Console.WriteLine($"{j + 1} {names.GetValue(j)}");
                                                                         }
-                                                                        Console.Write("Selected option: ");
+                                                                        
                                                                         int toppingSelected = 0;
                                                                         while (true)
                                                                         {
                                                                             try
                                                                             {
+                                                                                Console.Write("Selected option: ");
                                                                                 toppingSelected = Convert.ToInt32(Console.ReadLine());
                                                                             }
                                                                             catch (FormatException)
@@ -1391,13 +1400,13 @@ namespace PizzaBox.Client
                                         {
                                             Console.WriteLine($"{j + 1} {names.GetValue(j)}");
                                         }
-                                        Console.Write("Selected option:");
+                                        
                                         int crustSelected = 0;
                                         while (true)
                                         {
                                             try
                                             {
-
+                                                Console.Write("Selected option:");
                                                 crustSelected = Convert.ToInt32(Console.ReadLine());
                                             }
                                             catch (FormatException)
@@ -1430,14 +1439,14 @@ namespace PizzaBox.Client
                                         {
                                             Console.WriteLine($"{j + 1} {names.GetValue(j)}");
                                         }
-                                        Console.Write("Selected option:");
+                                        
 
                                         int crustFlavorSelected = 0;
                                         while (true)
                                         {
                                             try
                                             {
-
+                                                Console.Write("Selected option:");
                                                 crustFlavorSelected = Convert.ToInt32(Console.ReadLine());
                                             }
                                             catch (FormatException)
@@ -1469,13 +1478,13 @@ namespace PizzaBox.Client
                                         {
                                             Console.WriteLine($"{j + 1} {names.GetValue(j)}");
                                         }
-                                        Console.Write("Selected option:");
+                                        
                                         int sauceSelected = 0;
                                         while (true)
                                         {
                                             try
                                             {
-
+                                                Console.Write("Selected option:");
                                                 sauceSelected = Convert.ToInt32(Console.ReadLine());
                                             }
                                             catch (FormatException)
@@ -1507,14 +1516,14 @@ namespace PizzaBox.Client
                                         {
                                             Console.WriteLine($"{j + 1} {names.GetValue(j)}");
                                         }
-                                        Console.Write("Selected option:");
+                                        
 
                                         int AmountSelected = 0;
                                         while (true)
                                         {
                                             try
                                             {
-
+                                                Console.Write("Selected option:");
                                                 AmountSelected = Convert.ToInt32(Console.ReadLine());
                                             }
                                             catch (FormatException)
@@ -1547,13 +1556,13 @@ namespace PizzaBox.Client
                                         {
                                             Console.WriteLine($"{j + 1} {names.GetValue(j)}");
                                         }
-                                        Console.Write("Selected option: ");
+                                        
                                         int AmountSelected = 0;
                                         while (true)
                                         {
                                             try
                                             {
-
+                                                Console.Write("Selected option: ");
                                                 AmountSelected = Convert.ToInt32(Console.ReadLine());
                                             }
                                             catch (FormatException)
@@ -1590,13 +1599,13 @@ namespace PizzaBox.Client
                                             {
                                                 Console.WriteLine($"{j + 1} {names.GetValue(j)}");
                                             }
-                                            Console.Write("Selected option: ");
+                                           
                                             int toppingSelected = 0;
                                             while (true)
                                             {
                                                 try
                                                 {
-
+                                                    Console.Write("Selected option: ");
                                                     toppingSelected = Convert.ToInt32(Console.ReadLine());
                                                 }
                                                 catch (FormatException)
@@ -1635,13 +1644,13 @@ namespace PizzaBox.Client
                                                 {
                                                     Console.WriteLine($"{j + 1} {names.GetValue(j)}");
                                                 }
-                                                Console.Write("Selected option: ");
+                                                
                                                 int toppingSelected = 0;
                                                 while (true)
                                                 {
                                                     try
                                                     {
-
+                                                        Console.Write("Selected option: ");
                                                         toppingSelected = Convert.ToInt32(Console.ReadLine());
                                                     }
                                                     catch (FormatException)
@@ -1676,13 +1685,13 @@ namespace PizzaBox.Client
                                                     {
                                                         Console.WriteLine($"{j + 1} {names.GetValue(j)}");
                                                     }
-                                                    Console.Write("Selected option: ");
+                                                    
                                                     int toppingSelected = 0;
                                                     while (true)
                                                     {
                                                         try
                                                         {
-
+                                                            Console.Write("Selected option: ");
                                                             toppingSelected = Convert.ToInt32(Console.ReadLine());
                                                         }
                                                         catch (FormatException)
