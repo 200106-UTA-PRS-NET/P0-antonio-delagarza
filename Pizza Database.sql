@@ -11,12 +11,10 @@ create table PizzaBox.Users(
 	password varchar(100) not null,
 	first_name varchar(100) not null,
 	last_name varchar(100) not null,
-	phone varchar(100) not null,
 	--constraints
 	constraint pk_users primary key(email),
-	constraint phone_chk check (len(phone) = 9),
 	constraint pass_len check (len(password) >=6),
-	constraint phone_unique unique(phone)
+
 );
 
 
@@ -112,13 +110,3 @@ create table PizzaBox.StorePresetPizzas (
 
 );
 
---DROP EVERY TABLE AND CREATE THEM AGAIN
-drop table PizzaBox.StorePresetPizzas;
-
-drop table PizzaBox.StoreOrdersInfo;
-drop table PizzaBox.OrdersUserInfo;
-drop table PizzaBox.OrdersPizzaInfo;
-drop table PizzaBox.Pizzas;
-drop table PizzaBox.PresetPizzas;
-drop table PizzaBox.StoreInfo;
-drop table PizzaBox.Users;

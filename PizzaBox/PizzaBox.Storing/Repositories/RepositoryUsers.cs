@@ -28,16 +28,10 @@ namespace PizzaBox.Storing.Repositories
             }
             else
             {
-                try
-                {
-                    db.Users.Add(item);
-                    db.SaveChanges();
-                    Console.WriteLine("User craeted successfully");
-                }
-                catch (DbUpdateException ex)
-                {
-                    Console.WriteLine("Could not add to database");
-                }
+                db.Users.Add(item);
+                db.SaveChanges();
+                Console.WriteLine("User craeted successfully");
+                
             }
             
         }
@@ -54,18 +48,21 @@ namespace PizzaBox.Storing.Repositories
         {
             if (db.Users.Any(e => e.Email == item.Email))
             {
+               
                 Users updateUser = db.Users.FirstOrDefault(e => e.Email == item.Email);
                 updateUser.Password = item.Password;
                 updateUser.FirstName = item.FirstName;
                 updateUser.LastName = item.LastName;
-                updateUser.Phone = item.Phone;
+                
                 db.Users.Update(updateUser);
+                db.SaveChanges();
+                Console.WriteLine("User updated Successfully");
             }
             else
             {
                 Console.WriteLine("Could not update user because it does not exists");
             }
-            db.SaveChanges();
+            
         }
 
         public void Remove(string id)
@@ -97,7 +94,7 @@ namespace PizzaBox.Storing.Repositories
                           Password = user.Password,
                           FirstName = user.FirstName,
                           LastName = user.LastName,
-                          Phone = user.Phone
+                          
                         };//email and password matched
                         return;
                     }

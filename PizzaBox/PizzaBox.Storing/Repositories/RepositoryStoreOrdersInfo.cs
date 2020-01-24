@@ -24,16 +24,10 @@ namespace PizzaBox.Storing.Repositories
             //We need to see if the store id and order id exist
             if (db.StoreInfo.Any(e => e.StoreId == item.StoreId) && db.OrdersUserInfo.Any(e => e.OrderId == item.OrderId))
             {
-                try
-                {
-                    db.StoreOrdersInfo.Add(item);
-                    
-                    db.SaveChanges();
-                    Console.WriteLine("Order added to store");
-                }
-                catch (DbUpdateException ex){
-                    Console.WriteLine("Could not add to the database");
-                }
+                db.StoreOrdersInfo.Add(item);
+
+                db.SaveChanges();
+                
             }
             else
             {

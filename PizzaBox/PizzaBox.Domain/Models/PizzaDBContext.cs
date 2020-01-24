@@ -326,10 +326,6 @@ namespace PizzaBox.Domain.Models
 
                 entity.ToTable("Users", "PizzaBox");
 
-                entity.HasIndex(e => e.Phone)
-                    .HasName("phone_unique")
-                    .IsUnique();
-
                 entity.Property(e => e.Email)
                     .HasColumnName("email")
                     .HasMaxLength(100)
@@ -350,12 +346,6 @@ namespace PizzaBox.Domain.Models
                 entity.Property(e => e.Password)
                     .IsRequired()
                     .HasColumnName("password")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Phone)
-                    .IsRequired()
-                    .HasColumnName("phone")
                     .HasMaxLength(100)
                     .IsUnicode(false);
             });

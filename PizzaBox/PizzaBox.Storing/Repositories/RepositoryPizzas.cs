@@ -18,7 +18,7 @@ namespace PizzaBox.Storing.Repositories
         public enum SauceAvailable { Marinara=1, Creamy_Garlic_Parmesan, Barbeque, Buffalo };
         public enum AmountsAvailable { Light = 1, Regular, Extra};
         public enum ToppingsAvailable
-        { Pepperoni = 1, Italial_Sausage, Meatball, Ham, Bacon, Grilled_Chicken, Beef_Pork,
+        { Pepperoni = 1, Italial_Sausage, Meatball, Ham, Bacon, Grilled_Chicken, Beef, Pork,
                                 Mushroom, Spinach, Onion, Olives, Green_Bell_Peppers, Banana_Peppers, Pineapple, Jalapenos, Tomatoes};
 
         PizzaDBContext db;
@@ -35,16 +35,9 @@ namespace PizzaBox.Storing.Repositories
             }
             else
             {
-                try
-                {
-                    db.Pizzas.Add(item);
-                    db.SaveChanges();
-                    Console.WriteLine("Pizza craeted successfully");
-                }
-                catch (DbUpdateException ex)
-                {
-                    Console.WriteLine("Could not add to database");
-                }
+                db.Pizzas.Add(item);
+                db.SaveChanges();
+                
                 
             }
             

@@ -26,16 +26,10 @@ namespace PizzaBox.Storing.Repositories
             }
             else
             {
-                try
-                {
-                    db.StoreInfo.Add(item);
-                    db.SaveChanges();
-                    Console.WriteLine("Store craeted successfully");
-                }
-                catch (DbUpdateException ex)
-                {
-                    Console.WriteLine("Could not add to database");
-                }
+                db.StoreInfo.Add(item);
+                db.SaveChanges();
+                Console.WriteLine("Store craeted successfully");
+                
             }
             
         }
@@ -53,13 +47,22 @@ namespace PizzaBox.Storing.Repositories
             if (db.StoreInfo.Any(e => e.StoreId == item.StoreId))
             {
                 StoreInfo updateStore = db.StoreInfo.FirstOrDefault(e => e.StoreId == item.StoreId);
-                
+                updateStore.StoreName = item.StoreName;
+                updateStore.Address = item.Address;
+                updateStore.City = item.City;
+                updateStore.State = item.State;
+                updateStore.ZipCode = item.ZipCode;
+                updateStore.StorePrice = item.StorePrice;
+
+                db.StoreInfo.Update(updateStore);
+                db.SaveChanges();
+                Console.WriteLine("Store Updated Successfully");
             }
             else
             {
                 Console.WriteLine("Could not update store because it does not exists");
             }
-            db.SaveChanges();
+            
         }
         
         public void Remove(string id)

@@ -25,17 +25,10 @@ namespace PizzaBox.Storing.Repositories
             }
             else
             {
-                try
-                {
-                    db.PresetPizzas.Add(item);
-                    db.SaveChanges();
-                    Console.WriteLine("Pizza craeted successfully");
-                }
-                catch (DbUpdateException ex)
-                {
-
-                    Console.WriteLine("Could not add to database");
-                }
+                db.PresetPizzas.Add(item);
+                db.SaveChanges();
+                Console.WriteLine("Pizza craeted successfully");
+               
                 
             }
             

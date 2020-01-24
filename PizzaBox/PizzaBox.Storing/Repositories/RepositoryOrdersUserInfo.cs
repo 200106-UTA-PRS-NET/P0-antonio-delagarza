@@ -22,16 +22,9 @@ namespace PizzaBox.Storing.Repositories
             //we need to see if user exists
             if (db.Users.Any(e => e.Email == item.Email))
             {
-                try
-                {
-                    db.OrdersUserInfo.Add(item);
-                    db.SaveChanges();
-                    Console.WriteLine("Order Created successfully");
-                }
-                catch (DbUpdateException ex)
-                {
-                    Console.WriteLine("Could not add to database");
-                }
+                db.OrdersUserInfo.Add(item);
+                db.SaveChanges();
+               
                 
             }
             else
@@ -58,6 +51,7 @@ namespace PizzaBox.Storing.Repositories
         {
             var query = from e in db.OrdersUserInfo
                         where e.Email == email
+                        orderby e.OrderDateTime descending
                         select e;
 
             return query;
